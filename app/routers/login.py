@@ -29,6 +29,14 @@ def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session =
     return {"access_token": access_token, "token_type": "bearer"}
 
 
+@router.get('/verify', response_model=schemas.JWTVerifyResponse, status_code=status.HTTP_200_OK)
+def verify_JWT(current_user: int = Depends(JWTauth.get_current_user)):
+    if not current_user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"JWT Expired")
+    
+    return {"data": current_user, "message": "JWT Verified"}
+
+
 
     
 

@@ -55,6 +55,10 @@ class UserOut(BaseModel):
     class Config:
         orm_mode = True
 
+class UserResponse(BaseModel):
+    data: UserOut
+    message: str
+
 
 class Token(BaseModel):
     access_token: str
@@ -62,3 +66,8 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[str] = None
+
+
+class JWTVerifyResponse(BaseModel):
+    data: UserOut
+    message: str
