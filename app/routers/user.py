@@ -42,7 +42,7 @@ def get_user(id: int, db: Session = Depends(get_db)):
     return user
 
 
-@router.put("/", response_model=schemas.UserOut)
+@router.put("/", response_model=schemas.UserResponse)
 def update_user_info(user_details: schemas.UserUpdate, db: Session = Depends(get_db), current_user: int = Depends(JWTauth.get_current_user)):
 
     user_query = db.query(models.User).filter(models.User.id == current_user.id)
@@ -55,4 +55,4 @@ def update_user_info(user_details: schemas.UserUpdate, db: Session = Depends(get
     user_query.update(user_details.model_dump(), synchronize_session=False)
     db.commit()
 
-    return user_query.first()
+    return {"data": user_query.first(), "message": "User updated successfully"}
