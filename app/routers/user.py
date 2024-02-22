@@ -70,4 +70,4 @@ def update_user_info(
     user_query.update(user_details.model_dump(), synchronize_session=False)
     db.commit()
 
-    return user_query.first()
+    return {"data": user_query.first(), "message": "User updated successfully"}
