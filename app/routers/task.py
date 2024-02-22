@@ -15,8 +15,8 @@ router = APIRouter(prefix="/api/tasks", tags=["Tasks"])
 @router.get("/", response_model=schemas.TaskOutResponse)
 def get_user_tasks(
     priority: schemas.PriorityEnum = Query(None),
-    completed: bool = Query(None),
-    dline_passed: bool = Query(None),
+    completed: str = Query(None),
+    dline_passed: str = Query(None),
     search: Optional[str] = "",
     sort: schemas.SortEnum = Query(None),
     deleted: Optional[str] = Query(None),
@@ -34,7 +34,8 @@ def get_user_tasks(
     )
 
     if completed is not None:
-        query = query.filter(models.Task.completed == completed)
+        is_completed = completed == "true"
+        query = query.filter(models.Task.completed == is_completed)
 
     if dline_passed is not None:
         if dline_passed:

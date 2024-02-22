@@ -20,6 +20,7 @@ class Task(BaseModel):
     deadline: Optional[datetime] = None
     priority: PriorityEnum
     completed: Optional[bool] = False
+    is_deleted: Optional[bool] = False
 
 
 class TaskResponse(BaseModel):
